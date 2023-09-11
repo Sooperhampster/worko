@@ -1,0 +1,90 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button title=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registration</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>User Information</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Confirm Password</ion-label>
+        <ion-input type="password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Phone Number</ion-label>
+        <ion-input type="tel"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Have you hit a plateau in your lifting weight?</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-radio-group>
+        <ion-item>
+          <ion-label>Yes</ion-label>
+          <ion-radio value="yes" slot="end"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>No</ion-label>
+          <ion-radio value="no"  slot="end"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Which muscle groups do you prioritize?</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>     
+        <ion-item>
+          <ion-checkbox justify="space-between">Back</ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox justify="space-between">Biceps</ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox justify="space-between">Chest</ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox justify="space-between">Core</ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox justify="space-between">Legs</ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox justify="space-between">Shoulders</ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox justify="space-between">Triceps</ion-checkbox>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button color="secondary" size="full" (click)="finishRegister()">Register</ion-button>
+</ion-content>
