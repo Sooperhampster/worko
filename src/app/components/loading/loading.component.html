@@ -1,5 +1,3 @@
-<ion-content>
-  <div class="flex-center">
+  <div class="backdrop" *ngIf="(loadingState$ | async).show">
     <ion-spinner name="circular" color="primary" size="20"></ion-spinner>
   </div>
-</ion-content>
