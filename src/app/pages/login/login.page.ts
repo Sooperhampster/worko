@@ -5,10 +5,9 @@ import { loginPageForm } from './login.page.form';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/store/AppState';
 import { show, hide } from 'src/store/loading/loading.actions';
-import { recoverPassword, recoverPasswordSuccess, recoverPasswordFail, login, loginSuccess, loginFail } from 'src/store/login/login.actions';
+import { recoverPassword, login } from 'src/store/login/login.actions';
 import { ToastController } from '@ionic/angular';
 import { LoginState } from 'src/store/login/LoginState';
-import { AuthService } from 'src/app/services/auth.service';
 import { Subscription } from 'rxjs';
 
 
@@ -23,16 +22,13 @@ export class LoginPage implements OnInit, OnDestroy {
   loginStateSubscription: Subscription;
   
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private store: Store<AppState>, private toastController: ToastController, private authService: AuthService) { }
+  constructor(private router: Router, private formBuilder: FormBuilder, private store: Store<AppState>, private toastController: ToastController) { }
 
   ngOnInit() {
     this.form = new loginPageForm(this.formBuilder).createForm();
 
     this.loginStateSubscription = this.store.select('login').subscribe(loginState => {
       this.onIsRecoveredPassword(loginState);
-      this.onIsRecoveringPassword(loginState);
-
-      this.onIsLoggingIn(loginState);
       this.onIsLoggedIn(loginState);
 
       this.toggleLoading(loginState);
@@ -60,18 +56,6 @@ export class LoginPage implements OnInit, OnDestroy {
     }
   }
 
-  private onIsLoggingIn(loginState: LoginState){
-    if (loginState.isLoggingIn){
-      const email = this.form.get('email').value;
-      const password = this.form.get('password').value;
-      this.authService.login(email, password).subscribe(user => {
-        this.store.dispatch(loginSuccess({user}));
-      }, error => {
-        this.store.dispatch(loginFail({error}));
-      })
-    }
-  }
-
   private async onError(LoginState: LoginState){
     if (LoginState.error){
       const toaster = await this.toastController.create({
@@ -80,16 +64,6 @@ export class LoginPage implements OnInit, OnDestroy {
         color: "danger"
       });
       toaster.present();
-    }
-  }
-
-  private onIsRecoveringPassword(loginState: LoginState){
-    if (loginState.isRecoveringPassword){
-      this.authService.recoverEmailPassword(this.form.get('email').value).subscribe(() => {
-        this.store.dispatch(recoverPasswordSuccess());
-      }, error => {
-        this.store.dispatch(recoverPasswordFail({error}))
-      });
     }
   }
 
@@ -105,11 +79,11 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   forgotEmailPassword(){
-    this.store.dispatch(recoverPassword());
+    this.store.dispatch(recoverPassword({email: this.form.get('email').value}));
   }
 
   login(){
-    this.store.dispatch(login());
+    this.store.dispatch(login({email: this.form.get('email').value, password: this.form.get('password').value}));
   }
 
   register(){
