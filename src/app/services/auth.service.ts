@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../model/user/User';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import * as firebase from 'firebase/compat/app';
+import * as firebase from '@angular/fire/node_modules/firebase/compat';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class AuthService {
     return new Observable<User>(observer => {
       this.auth.setPersistence(firebase.default.auth.Auth.Persistence.LOCAL).then(() => {
         this.auth.signInWithEmailAndPassword(email, password).then((firebaseUser: firebase.default.auth.UserCredential) => {
-          observer.next({email, id: firebaseUser.user.uid});
+          observer.next({ email, id: firebaseUser.user?.uid || ''});
           observer.complete();
         }).catch(error => {
           observer.error(error);

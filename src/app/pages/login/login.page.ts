@@ -22,7 +22,11 @@ export class LoginPage implements OnInit, OnDestroy {
   loginStateSubscription: Subscription;
   
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private store: Store<AppState>, private toastController: ToastController) { }
+  constructor(private router: Router, private formBuilder: FormBuilder, private store: Store<AppState>, private toastController: ToastController) {
+    this.form = this.formBuilder.group({
+
+    })
+   }
 
   ngOnInit() {
     this.form = new loginPageForm(this.formBuilder).createForm();
@@ -83,7 +87,9 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   login(){
-    this.store.dispatch(login({email: this.form.get('email').value, password: this.form.get('password').value}));
+    this.store.dispatch(login({email: this.form.get('email')?.value, password: this.form.get('password')?.value}));
+    //this.router.navigate(['home']);
+    //this.store.dispatch(login(this.form.value))
   }
 
   register(){
